@@ -22,4 +22,10 @@ public class lesson1 {
         traingle.isShape();
         circle.isShape();
     }
+
+    /*2.
+    - No class Engine in Car class
+    - No "implements" in Lorry class
+    - no "Override" abstract method open from abstract class Car
+    */
 }
