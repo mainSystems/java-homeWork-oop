@@ -1,3 +1,5 @@
+package lesson1;
+
 public class Circle extends Shape {
     private static final double PI = 3.14;
     private int radius;
@@ -13,6 +15,6 @@ public class Circle extends Shape {
 
     @Override
     public void isShape() {
-        System.out.println("shape: Circle and area: " + getArea());
+        System.out.println("shape: lesson1.Circle and area: " + getArea());
     }
 }

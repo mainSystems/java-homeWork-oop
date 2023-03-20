@@ -1,3 +1,5 @@
+package lesson1;
+
 public class Person {
     private final String firstName;
     private final String lastName;
@@ -79,7 +81,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "lesson1.Person{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", middleName='" + middleName + '\'' +

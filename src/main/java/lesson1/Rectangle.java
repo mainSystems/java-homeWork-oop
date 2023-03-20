@@ -1,3 +1,5 @@
+package lesson1;
+
 public class Rectangle extends Shape {
 
     private final int height;
@@ -15,6 +17,6 @@ public class Rectangle extends Shape {
 
     @Override
     public void isShape() {
-        System.out.println("shape: Rectangle and area: " + getArea());
+        System.out.println("shape: lesson1.Rectangle and area: " + getArea());
     }
 }

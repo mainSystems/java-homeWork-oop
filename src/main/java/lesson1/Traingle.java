@@ -1,3 +1,5 @@
+package lesson1;
+
 public class Traingle extends Shape {
     private final int height1;
     private final int height2;

@@ -1,4 +1,4 @@
-package checking;
+package lesson1.checking;
 
 public class LightWeightCar extends Car implements Moveable {
 

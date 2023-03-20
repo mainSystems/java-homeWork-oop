@@ -1,4 +1,4 @@
-package checking;
+package lesson1.checking;
 
 abstract class Car {
     public Engine engine;

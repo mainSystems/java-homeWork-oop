@@ -1,4 +1,4 @@
-package checking;
+package lesson1.checking;
 
 public class Lorry extends Car implements Moveable, Stopable {
     public void move(){
