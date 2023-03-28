@@ -1,0 +1,51 @@
+//Overlapping between films
+select
+	fs2.film_id,
+	fs2.title,
+	extract (hour from s.start_time) as hour,
+	ft.duration,
+	case
+		when ft.duration = '60' then
+			case
+				when lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1) > 0 then 'Good' else'Overlap'
+			end
+		when ft.duration = '90' then
+			case
+				when lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1.5) > 0 then 'Good' else 'Overlap'
+			end
+		when ft.duration = '120' then
+			case
+				when lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract (hour from s.start_time)+2) > 0 then 'Good' else 'Overlap'
+			end
+	end as chek_overlap_session
+from
+	film_schedule fs2
+join session s
+	on s.session_id  = fs2."session"
+join film_title ft
+	on ft.film_name = fs2.title;
+
+
+//Break between films
+select
+	fs2.film_id,
+	fs2.title,
+	extract (hour from s.start_time) as hour,
+	ft.duration,
+	case
+		when ft.duration = '60' then
+				lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1)
+		when ft.duration = '90' then
+				lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1.5)
+		when ft.duration = '120' then
+				lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract (hour from s.start_time)+2)
+	end as hours_between_session
+from
+	film_schedule fs2
+join session s
+	on s.session_id  = fs2."session"
+join film_title ft
+	on ft.film_name = fs2.title
+order by hours_between_session;
+
+
