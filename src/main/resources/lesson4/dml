@@ -1,0 +1,92 @@
+--Overlapping between films
+select
+	fs2.film_id,
+	fs2.title,
+	extract (hour from s.start_time) as hour,
+	ft.duration,
+	case
+		when ft.duration = '60' then
+			case
+				when lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1) > 0 then 'Good' else'Overlap'
+			end
+		when ft.duration = '90' then
+			case
+				when lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1.5) > 0 then 'Good' else 'Overlap'
+			end
+		when ft.duration = '120' then
+			case
+				when lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract (hour from s.start_time)+2) > 0 then 'Good' else 'Overlap'
+			end
+	end as chek_overlap_session
+from
+	film_schedule fs2
+join session s
+	on s.session_id  = fs2."session"
+join film_title ft
+	on ft.film_name = fs2.title;
+
+
+--Break between films
+select
+	fs2.film_id,
+	fs2.title,
+	extract (hour from s.start_time) as hour,
+	ft.duration,
+	case
+		when ft.duration = '60' then
+				lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1)
+		when ft.duration = '90' then
+				lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract(hour from s.start_time)+1.5)
+		when ft.duration = '120' then
+				lead(extract (hour from s.start_time)) OVER (ORDER BY fs2.film_id) - (extract (hour from s.start_time)+2)
+	end as hours_between_session
+from
+	film_schedule fs2
+join session s
+	on s.session_id  = fs2."session"
+join film_title ft
+	on ft.film_name = fs2.title
+order by hours_between_session;
+
+--visitors and total cost
+(select
+	fs2.title,
+	sum(t."session") as count_visitors,
+	avg(t."session") as average_visitors,
+	sum(cast(s.price as integer)) as cost
+from
+	film_schedule fs2
+join session s
+	on s.session_id  = fs2."session"
+join tickets t
+	on t.ticket_id = s.session_id
+group by fs2.title
+order by cost desc)
+union all
+(select
+	(select 'total'),
+	(select cast(null as numeric)),
+	(select cast(null as numeric)),
+	sum(cast(s.price as integer))
+from
+	film_schedule fs2
+join session s
+	on s.session_id  = fs2."session"
+join tickets t
+on t.ticket_id = s.session_id)
+
+
+--time range and gain depend on
+select
+	case
+		when s.start_time between '09:00:00' and '15:00:00' then 'between_9_15'
+		when s.start_time between '15:00:00' and '18:00:00' then 'between_15_18'
+		when s.start_time between '18:00:00' and '21:00:00' then 'between_18_21'
+		when s.start_time between '21:00:00' and '00:00:00' then 'between_21_00'
+	end as time_range,
+	sum(cast(s.price as integer)) as gain_by_time
+from
+	"session" s
+join tickets t
+	on t."session" = s.session_id
+group by(time_range)
