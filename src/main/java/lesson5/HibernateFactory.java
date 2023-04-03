@@ -5,9 +5,9 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateFactory {
 
-    public static SessionFactory start() {
-    Configuration configuration = new Configuration();
-        configuration.configure();
-        return configuration.buildSessionFactory();
+    private static final SessionFactory SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
+
+    public static SessionFactory getFactory() {
+        return SESSION_FACTORY;
     }
 }
