@@ -25,11 +25,11 @@ public class lesson5 {
         Students studentById = new StudentServiceImpl().fetchStudentById(session, 1L);
         System.out.println("studentById = " + studentById);
 
-        List<Students> studentsList = new StudentServiceImpl().fetchAllStudent(session);
-        for (Students s :
-                studentsList) {
-            System.out.println("s = " + s);
-        }
+//        List<Students> studentsList = new StudentServiceImpl().fetchAllStudent(session);
+//        for (Students s :
+//                studentsList) {
+//            System.out.println("s = " + s);
+//        }
 
         session.close();
         factory.close();
