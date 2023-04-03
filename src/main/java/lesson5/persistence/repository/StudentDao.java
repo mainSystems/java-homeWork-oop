@@ -6,12 +6,13 @@ import org.hibernate.Session;
 import java.util.List;
 
 public interface StudentDao {
-    public abstract void addStudent(Session session, String name, int mark);
+    void addStudent(Session session, String name, int mark);
 
-    public abstract void delStudent(Session session, Long id);
+    void delStudent(Session session, Long id);
 
-    public abstract Students fetchStudentById(Session session, Long id);
+    Students fetchStudentById(Session session, Long id);
 
-    public abstract List<Students> fetchAllStudent(Session session);
-    public abstract void updateStudentMarkById(Session session, Long id, int mark);
+    List<Students> fetchAllStudent(Session session);
+
+    void updateStudentMarkById(Session session, Long id, int mark);
 }
