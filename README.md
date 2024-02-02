@@ -1,4 +1,4 @@
-# javaSpringShop
+# java-homeWork-oop
 
 <h1 align="center">Hi 👋, I'm Dn</h1>
 <h3 align="center">This repository contains my homework and java training</h3>
